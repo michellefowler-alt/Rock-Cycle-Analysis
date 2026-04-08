@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Cycle Critical Thinking Activity</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #f5f5f3;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .activity {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .scenario-banner {
+      border-left: 3px solid #1D9E75;
+      background: #fff;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 0.5px solid #e0e0de;
+      border-left: 3px solid #1D9E75;
+    }
+
+    .scenario-banner h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .scenario-banner p {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #fff;
+      color: #555;
+      transition: all 0.15s;
+    }
+
+    .tab.active {
+      background: #e8f3fd;
+      border-color: #93c5e8;
+      color: #185FA5;
+    }
+
+    .tab:hover:not(.active) {
+      background: #f0f0ee;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e0e0de;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 11px;
+      color: #777;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e8e8e6;
+      background: #fafaf8;
+    }
+
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f0f0ee;
+      color: #1a1a1a;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .b-ig  { background: #FAECE7; color: #712B13; }
+    .b-sed { background: #FAEEDA; color: #633806; }
+    .b-met { background: #FBEAF0; color: #72243E; }
+
+    .vocab-pill {
+      display: inline-block;
+      background: #E1F5EE;
+      color: #085041;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      margin: 1px 2px;
+      cursor: pointer;
+      border: 1px solid #9FE1CB;
+    }
+
+    .vocab-pill:hover { background: #c5eddf; }
+
+    .vocab-def {
+      display: none;
+      font-size: 12px;
+      background: #E1F5EE;
+      color: #085041;
+      border-radius: 6px;
+      padding: 7px 11px;
+      margin: 4px 0 6px;
+      border-left: 3px solid #1D9E75;
+      line-height: 1.55;
+    }
+
+    .vocab-def.show { display: block; }
+
+    .q-block { margin-bottom: 1.2rem; }
+
+    .q-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 7px;
+      line-height: 1.55;
+    }
+
+    .q-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f0ee;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 5px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 75px;
+      padding: 10px;
+      font-size: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafaf8;
+      color: #1a1a1a;
+      font-family: inherit;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #888;
+      background: #fff;
+    }
+
+    .hint-btn {
+      font-size: 12px;
+      color: #666;
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 3px 10px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .hint-btn:hover { background: #f0f0ee; }
+
+    .hint-text {
+      display: none;
+      font-size: 12px;
+      color: #555;
+      background: #f7f7f5;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-top: 6px;
+      border-left: 3px solid #ccc;
+      line-height: 1.6;
+    }
+
+    .hint-text.show { display: block; }
+
+    .pathway-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pnode {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .ptag {
+      font-size: 11px;
+      color: #666;
+      background: #f0f0ee;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 2px 7px;
+    }
+
+    .arr { color: #aaa; font-size: 13px; }
+
+    .energy-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .ecard {
+      flex: 1;
+      min-width: 120px;
+      background: #fafaf8;
+      border: 1px solid #e0e0de;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .ecard .el { font-size: 11px; color: #888; margin-bottom: 3px; }
+    .ecard .ev { font-size: 14px; font-weight: 600; }
+    .ecard .ed { font-size: 11px; color: #777; margin-top: 3px; line-height: 1.45; }
+
+    .match-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .match-item .ml {
+      min-width: 210px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    select {
+      padding: 5px 10px;
+      font-size: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafaf8;
+      color: #1a1a1a;
+      cursor: pointer;
+    }
+
+    .check-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .btn {
+      padding: 7px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #fff;
+      color: #1a1a1a;
+      transition: background 0.12s;
+    }
+
+    .btn:hover { background: #f0f0ee; }
+
+    .checklist label {
+      font-size: 13px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      line-height: 1.55;
+    }
+
+    checklist input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid #ebebea;
+      margin: 1.25rem 0;
+    }
+
+    #match-result { font-size: 13px; color: #555; }
+  </style>
+</head>
+<body>
+
+<div class="activity">
+
+  <h1>Rock cycle critical thinking activity</h1>
+  <p class="subtitle">9th Grade Earth &amp; Environmental Science</p>
+
+  <div class="scenario-banner">
+    <h2>Field investigation: Mt. Lassen volcanic region</h2>
+    <p>A geology team collected rock samples and temperature readings from four locations near a volcano. Your job is to study the evidence, figure out how each rock formed, and explain what sources of energy make the rock cycle work.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('data')">Part 1 — Data tables</button>
+    <button class="tab" onclick="switchTab('pathway')">Part 2 — Rock pathways</button>
+    <button class="tab" onclick="switchTab('energy')">Part 3 — Energy sources</button>
+    <button class="tab" onclick="switchTab('synthesis')">Part 4 — Put it together</button>
+  </div>
+
+  <!-- PART 1 -->
+  <div id="tab-data" class="panel active">
+    <p class="sec-label">Study the field data</p>
+    <p style="font-size:13px;color:#666;margin-bottom:10px">Tap a <span class="vocab-pill" style="cursor:default">green word</span> anywhere in the activity to see its definition.</p>
+
+    <div class="card">
+      <p class="card-title">Rock sample data</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Sample</th><th>Location</th><th>What it looks like</th><th>Main minerals</th><th>Where found</th><th>Rock type</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A</strong></td>
+              <td>Edge of a lava flow</td>
+              <td>Very fine grains, glassy surface, tiny holes (called <span class="vocab-pill" onclick="toggleVocab('v-vesicles')">vesicles</span>)</td>
+              <td>Feldspar, pyroxene, volcanic glass</td>
+              <td>At the surface</td>
+              <td><span class="badge b-ig">Igneous</span></td>
+            </tr>
+            <tr><td colspan="6" style="padding:0 10px 4px">
+              <div class="vocab-def" id="v-vesicles">Vesicles: small holes left behind when gas bubbles got trapped in lava as it hardened.</div>
+            </td></tr>
+            <tr>
+              <td><strong>B</strong></td>
+              <td>Riverbed 2 km away</td>
+              <td>Distinct layers, rounded grains, wavy patterns from flowing water (called <span class="vocab-pill" onclick="toggleVocab('v-crossbed')">cross-bedding</span>)</td>
+              <td>Quartz, feldspar, clay</td>
+              <td>Surface to 0.5 m deep</td>
+              <td><span class="badge b-sed">Sedimentary</span></td>
+            </tr>
+            <tr><td colspan="6" style="padding:0 10px 4px">
+              <div class="vocab-def" id="v-crossbed">Cross-bedding: angled layers inside a rock that show sediment was moved and deposited by flowing water or wind.</div>
+            </td></tr>
+            <tr>
+              <td><strong>C</strong></td>
+              <td>Deep rock exposed by uplift</td>
+              <td>Flat, ribbon-like bands; minerals squeezed and rearranged (called <span class="vocab-pill" onclick="toggleVocab('v-foliated')">foliated</span>)</td>
+              <td>Garnet, mica, hornblende</td>
+              <td>Originally 10–15 km deep</td>
+              <td><span class="badge b-met">Metamorphic</span></td>
+            </tr>
+            <tr><td colspan="6" style="padding:0 10px 4px">
+              <div class="vocab-def" id="v-foliated">Foliated: when a rock has parallel bands or layers caused by minerals being squeezed flat under extreme pressure.</div>
+            </td></tr>
+            <tr>
+              <td><strong>D</strong></td>
+              <td>Drill core from magma chamber</td>
+              <td>Large, tightly locked crystals visible to the naked eye</td>
+              <td>Quartz, feldspar, biotite, hornblende</td>
+              <td>3–5 km deep</td>
+              <td><span class="badge b-ig">Igneous</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Temperature and pressure at different depths</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Depth</th><th>Temperature</th><th>Pressure</th><th>What is happening here</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Surface (0 km)</td><td>25°C (room temp)</td><td>Very low</td>
+              <td>Rock breaks down, gets carried away, and piles up (<span class="vocab-pill" onclick="toggleVocab('v-wea')">weathering</span>, <span class="vocab-pill" onclick="toggleVocab('v-ero')">erosion</span>, deposition)</td>
+            </tr>
+            <tr><td colspan="4" style="padding:0 10px 4px">
+              <div class="vocab-def" id="v-wea">Weathering: the breaking down of rock into smaller pieces by water, wind, ice, or chemicals — the rock stays in place.</div>
+              <div class="vocab-def" id="v-ero">Erosion: the movement of broken-down rock pieces (sediment) from one place to another by water, wind, or ice.</div>
+            </td></tr>
+            <tr>
+              <td>3–5 km deep</td><td>200–400°C</td><td>Medium</td>
+              <td>Melted rock (<span class="vocab-pill" onclick="toggleVocab('v-magma')">magma</span>) cools slowly underground</td>
+            </tr>
+            <tr><td colspan="4" style="padding:0 10px 4px">
+              <div class="vocab-def" id="v-magma">Magma: melted rock found underground. When it reaches the surface through a volcano, it is called lava.</div>
+            </td></tr>
+            <tr>
+              <td>10–15 km deep</td><td>500–700°C</td><td>Very high</td>
+              <td>Rock is squeezed and heated but does NOT fully melt — minerals rearrange (<span class="vocab-pill" onclick="toggleVocab('v-meta')">metamorphism</span>)</td>
+            </tr>
+            <tr><td colspan="4" style="padding:0 10px 4px">
+              <div class="vocab-def" id="v-meta">Metamorphism: when rock is changed by heat and pressure deep underground without melting. The minerals inside recrystallize into new forms.</div>
+            </td></tr>
+            <tr><td>30+ km deep</td><td>Above 900°C</td><td>Extreme</td><td>Rock begins to melt, forming new magma</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="sec-label">Questions — use the data tables to answer</p>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">1</span> Sample A has tiny holes (vesicles) and a glassy surface. What does this tell you about how fast it cooled and where cooling happened? Use the depth/temperature table to support your answer.</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Fast cooling = very small or no crystals = glassy texture. The vesicles (holes) show gases were trapped before they could escape — this happens when lava cools quickly at the surface. The temperature table shows the surface is only 25°C, a huge drop from magma temperatures.</div>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">2</span> Samples A and D are both igneous rocks, but they look very different. Using the depth and temperature data, explain why Sample D has large crystals while Sample A does not.</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Sample D cooled slowly 3–5 km underground at 200–400°C — slow cooling gives minerals time to grow into large crystals. Sample A cooled quickly at the surface — fast cooling means crystals barely have time to form, so the texture is fine-grained or glassy.</div>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">3</span> What two conditions (shown in the data table) changed the original rock into Sample C? Why did the rock change without melting?</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Heat (500–700°C) and very high pressure at 10–15 km deep. The temperature was hot enough to rearrange minerals but not hot enough to melt the rock completely — that is exactly what metamorphism is.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2 -->
+  <div id="tab-pathway" class="panel">
+    <p class="sec-label">Trace each rock's history</p>
+    <div class="card">
+      <p style="font-size:13px;color:#666;margin-bottom:14px">Each diagram shows the steps that created a sample. Read the pathway, then answer the question below it.</p>
+
+      <p class="card-title">Sample A — volcanic rock (basalt)</p>
+      <div class="pathway-row">
+        <span class="pnode" style="background:#FAECE7;color:#712B13">Mantle rock</span>
+        <span class="arr">→</span><span class="ptag">partial melting</span><span class="arr">→</span>
+        <span class="pnode" style="background:#FAECE7;color:#712B13">Magma</span>
+        <span class="arr">→</span><span class="ptag">eruption + fast cooling</span><span class="arr">→</span>
+        <span class="pnode" style="background:#FAECE7;color:#712B13">Volcanic igneous rock</span>
+      </div>
+      <div class="q-block" style="margin-top:10px">
+        <div class="q-label"><span class="q-num">4</span> What energy source causes the mantle rock to melt? Could this process happen without that energy source? Explain.</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Earth's internal heat (also called geothermal energy) — this comes from radioactive materials decaying deep inside Earth and leftover heat from Earth's formation. Without it, the temperature underground would never get hot enough to melt rock, so no magma, no volcanoes, and no igneous rocks from cooling magma.</div>
+      </div>
+
+      <hr class="divider">
+
+      <p class="card-title">Sample B — layered rock (sandstone)</p>
+      <div class="pathway-row">
+        <span class="pnode" style="background:#FAEEDA;color:#633806">Existing rock</span>
+        <span class="arr">→</span><span class="ptag">weathering + erosion</span><span class="arr">→</span>
+        <span class="pnode" style="background:#FAEEDA;color:#633806">Loose sediment</span>
+        <span class="arr">→</span><span class="ptag">piling up + squeezing + cementing</span><span class="arr">→</span>
+        <span class="pnode" style="background:#FAEEDA;color:#633806">Sedimentary rock</span>
+      </div>
+      <div class="q-block" style="margin-top:10px">
+        <div class="q-label"><span class="q-num">5</span> The wavy patterns (cross-bedding) in Sample B show that water carried the sediment grains. What energy source ultimately powers the rivers and streams that moved those grains?</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Solar energy (energy from the Sun) powers the water cycle — the Sun heats water, causing it to evaporate, form clouds, and fall as rain. That rainwater flows downhill into rivers, which carry and deposit sediment. Gravity also plays a role in pulling water and sediment downhill.</div>
+      </div>
+
+      <hr class="divider">
+
+      <p class="card-title">Sample C — banded rock (schist)</p>
+      <div class="pathway-row">
+        <span class="pnode" style="background:#FBEAF0;color:#72243E">Existing rock</span>
+        <span class="arr">→</span><span class="ptag">gets buried deep / subduction</span><span class="arr">→</span>
+        <span class="pnode" style="background:#FBEAF0;color:#72243E">Intense heat + pressure (no melting)</span>
+        <span class="arr">→</span><span class="ptag">minerals rearrange</span><span class="arr">→</span>
+        <span class="pnode" style="background:#FBEAF0;color:#72243E">Metamorphic rock</span>
+      </div>
+      <div class="q-block" style="margin-top:10px">
+        <div class="q-label"><span class="q-num">6</span> Sample C originally formed 10–15 km underground but was found at the surface. What process brought it back up, and what energy source drives that process?</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Tectonic uplift — Earth's internal heat drives convection currents in the mantle (think of slow-moving currents in thick liquid), which push tectonic plates around. When plates collide or separate, deep rocks can get pushed toward the surface. Over millions of years, the rock above erodes away, exposing what was once deep underground.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3 -->
+  <div id="tab-energy" class="panel">
+    <p class="sec-label">What powers the rock cycle?</p>
+    <div class="card">
+      <div class="energy-row">
+        <div class="ecard">
+          <div class="el">Energy source 1</div>
+          <div class="ev" style="color:#712B13">Earth's internal heat</div>
+          <div class="ed">Comes from radioactive decay and heat left over from Earth's formation</div>
+        </div>
+        <div class="ecard">
+          <div class="el">Energy source 2</div>
+          <div class="ev" style="color:#633806">Energy from the Sun</div>
+          <div class="ed">Drives the water cycle, weather, and surface processes</div>
+        </div>
+        <div class="ecard">
+          <div class="el">Force</div>
+          <div class="ev">Gravity</div>
+          <div class="ed">Pulls sediment and water downhill; helps drive plate movement</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Matching — choose the energy source for each process</p>
+      <div class="match-item"><span class="ml">Magma forming underground</span><select><option value="">Choose…</option><option>Earth's internal heat</option><option>Energy from the Sun</option><option>Gravity</option></select></div>
+      <div class="match-item"><span class="ml">A river carrying sediment</span><select><option value="">Choose…</option><option>Earth's internal heat</option><option>Energy from the Sun</option><option>Gravity</option></select></div>
+      <div class="match-item"><span class="ml">Tectonic plates moving</span><select><option value="">Choose…</option><option>Earth's internal heat</option><option>Energy from the Sun</option><option>Gravity</option></select></div>
+      <div class="match-item"><span class="ml">Rock being squeezed and heated (metamorphism)</span><select><option value="">Choose…</option><option>Earth's internal heat</option><option>Energy from the Sun</option><option>Gravity</option></select></div>
+      <div class="match-item"><span class="ml">Sediment falling to the riverbed</span><select><option value="">Choose…</option><option>Earth's internal heat</option><option>Energy from the Sun</option><option>Gravity</option></select></div>
+      <div class="match-item"><span class="ml">A volcano erupting</span><select><option value="">Choose…</option><option>Earth's internal heat</option><option>Energy from the Sun</option><option>Gravity</option></select></div>
+      <div class="check-row">
+        <button class="btn" onclick="checkMatch()">Check answers</button>
+        <span id="match-result"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">7</span> Imagine Earth's internal heat completely shut off. Which parts of the rock cycle would stop working? Which parts could still happen, at least for a while?</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Without internal heat: no more volcanism, no plate movement, no metamorphism, no new magma. Surface processes driven by the Sun — weathering, erosion, and deposition — would continue as long as there is still relief (hills and mountains to erode). Eventually everything would flatten and the rock cycle would basically stop.</div>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">8</span> Scientists say the rock cycle recycles matter (the stuff rocks are made of) but does NOT recycle energy. Using examples from the samples, explain what that means in your own words.</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Matter is recycled — the same atoms that were in Sample A's lava could end up in Sample B as sediment after weathering. But energy is not recycled — heat from Earth's interior and energy from the Sun have to keep coming in from outside the rock cycle to keep it running. Energy is used up, not passed back around.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 4 -->
+  <div id="tab-synthesis" class="panel">
+    <p class="sec-label">Put it all together — extended response</p>
+    <div class="card">
+      <p style="font-size:14px;color:#555;line-height:1.65;margin-bottom:1.25rem">Use all four samples and the data tables to write a complete explanation. Your response should show that you understand how all three rock types form, how they can change into other rock types, and what energy sources make all of this happen.</p>
+      <div style="background:#fafaf8;border-radius:8px;padding:14px;margin-bottom:1.25rem;border:1px solid #e8e8e6">
+        <p style="font-size:13px;font-weight:600;margin-bottom:10px">Make sure your response includes:</p>
+        <div class="checklist">
+          <label><input type="checkbox"> How each of the 3 rock types forms — use at least one sample as an example for each</label>
+          <label><input type="checkbox"> How each rock type can be destroyed or changed into a different rock type</label>
+          <label><input type="checkbox"> Specific temperature or pressure values from the data to support your explanation</label>
+          <label><input type="checkbox"> At least two different energy sources and what rock cycle processes each one drives</label>
+          <label><input type="checkbox"> An explanation of why geologists call it a "cycle" — why does it keep going?</label>
+        </div>
+      </div>
+      <textarea style="min-height:180px" placeholder="Write your response here..."></textarea>
+    </div>
+
+    <div class="card">
+      <p style="font-size:14px;font-weight:600;margin-bottom:10px">Going further — critical thinking</p>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">9</span> A classmate says: "The rock cycle proves rocks can never really be destroyed — they just change shape." Is this statement accurate? What would be a more precise way to say it?</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">Partially correct — the atoms (matter) that make up rocks are recycled and not destroyed. But individual rocks definitely ARE destroyed — a granite boulder can be melted, dissolved by acid rain, or crushed into sediment. A more accurate statement: "The material rocks are made of gets recycled through the rock cycle — individual rocks are created and destroyed, but Earth's rock-forming material is conserved."</div>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">10</span> Mars has no liquid water at the surface, almost no atmosphere, and does not appear to have moving tectonic plates. Based on what you know about the rock cycle, predict which parts of the cycle would NOT work on Mars. Explain your reasoning.</div>
+        <textarea placeholder="Write your answer here..."></textarea>
+        <button class="hint-btn" onclick="toggleHint(this)">Show hint</button>
+        <div class="hint-text">No liquid water → no water-driven erosion or sediment transport, so the sedimentary branch of the rock cycle barely works. No plate tectonics → no subduction, so rocks don't get buried deep enough for most metamorphism, and there is little volcanic activity. Mars may still have some wind erosion and possibly a little internal heat, but its rock cycle is largely stalled compared to Earth's.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id) {
+    const ids = ['data','pathway','energy','synthesis'];
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ids[i] === id));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  function toggleHint(btn) {
+    const h = btn.nextElementSibling;
+    const showing = h.classList.toggle('show');
+    btn.textContent = showing ? 'Hide hint' : 'Show hint';
+  }
+
+  function toggleVocab(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show');
+  }
+
+  function checkMatch() {
+    const correct = [
+      "Earth's internal heat",
+      "Energy from the Sun",
+      "Earth's internal heat",
+      "Earth's internal heat",
+      "Gravity",
+      "Earth's internal heat"
+    ];
+    const selects = document.querySelectorAll('#tab-energy select');
+    let score = 0;
+    selects.forEach((s, i) => { if (s.value === correct[i]) score++; });
+    const el = document.getElementById('match-result');
+    if (score === 6) el.textContent = '6/6 — all correct!';
+    else if (score >= 4) el.textContent = score + '/6 — almost there, review the ones you missed.';
+    else el.textContent = score + '/6 — revisit the energy sources section.';
+  }
+</script>
+
+</body>
+</html>
